@@ -20,43 +20,50 @@ public class PlayDirector : MonoBehaviour
 
     public static int scores;//現在の得点を表示
     public int ADDSCORE = 100;//正解時の加算点
+
     public List<CharacterData> allCharas = new List<CharacterData>();// キャラ一覧(アタッチで格納)
     public static List<CharacterData> selectCharas;//一覧から問題を抜き出す箱
+
+    public GameObject Canvas_Display;
+    public GameObject Canvas_AnswerScreen;
+    public GameObject Canvas_NextQuiz;
+    public GameObject Canvas_Title;
 
     public void SelectQuiz()//[1]リストからランダムで三つ子を３人選んで格納
     {
         // 抽選結果を入れるリストのインスタンスを作成
-        selectCharas = new List<CharacterData>();
-        for (int i = 0; i < 3; i++)
-        {
-            // ランダムな内容を１つ抽選、取得
-            int index = Random.Range(0, allCharas.Count);
-            CharacterData quiz = allCharas[index];//quizに一つ問題を入れる
-            selectCharas.Add(quiz);//selectCharasに問題を加える
-        }
+        //selectCharas = new List<CharacterData>();
+        // for (int i = 0; i < 3; i++)
+        // {
+        //     // ランダムな内容を１つ抽選、取得
+        //     int index = Random.Range(0, allCharas.Count);
+        //     CharacterData quiz = allCharas[index];//quizに一つ問題を入れる
+        //     selectCharas.Add(quiz);//selectCharasに問題を加える
+        // }
         Display();
     }
 
 
-    public void Display()//[2]三つ子を表示する
+    public void Display()//[2]Canvas_Displayを表示する
     {
-
+        Canvas_Display.gameObject.SetActive(true);
     }
 
     public void OnDisplayClick()//[3]クリックで次に進む→暗転
     {
-        //Displayの三つ子を消す
+        Debug.Log("OnDisplayClick");
         //暗転
+        //Displayの三つ子を消す
+        Canvas_Display.gameObject.SetActive(false);
         //AnswerScreenを呼ぶ
-
-        AnswerScreen();
+        Canvas_AnswerScreen.gameObject.SetActive(true);//[4]Canvas_AnswerScreenを表示
+        //AnswerScreen();
     }
-
-    public void AnswerScreen()//[4]回答画面
-    {
-        //上に選んだ三つ子の画像
-        //下には選択用スクロール式の三つ子(allCharas)を表示、畑画面が使えるはず…！
-    }
+    // public void AnswerScreen()//
+    // {
+    //     //上に選んだ三つ子の画像
+    //     //下には選択用スクロール式の三つ子(allCharas)を表示、畑画面が使えるはず…！
+    // }
 
     public void OnAnserScreenClick()//[5]着替えるボタンで
     {
@@ -70,38 +77,37 @@ public class PlayDirector : MonoBehaviour
             // }
         }
 
-        if (judg == 3)//[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
+        Canvas_AnswerScreen.gameObject.SetActive(false);
+
+        if (judg == 3)//[7]三人ともあってたら得点を加算して[1]へ
         {
-            //selectCharas[quizCount-1].gameObject.SetActive(false);
+            Canvas_NextQuiz.gameObject.SetActive(true);
             //回答画面を非表示にする
             //リストの中身を空にする
             //スコアを加点
             scores += ADDSCORE;
 
         }
-        //[8]一人でも間違ってたらリザルトを表示(問題を消す)
-
-
-        //[9]リザルトはスコア、ハイスコア表示
-        //selectCharas[quizCount-1].gameObject.SetActive(true);
-
-        //[10]ハイスコアの書き換え
-        if (GameDirector.hiScore < PlayDirector.scores)
-        {
-            GameDirector.hiScore = PlayDirector.scores;
-        }
+        //[8]一人でも間違ってたらリザルトを表示
+        Canvas_Title.gameObject.SetActive(true);
     }
 
     //[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
     public void OnNextQuizClick()
     {
+        Canvas_NextQuiz.gameObject.SetActive(false);
         SelectQuiz();
     }
 
-    //[11]クリックしたらタイトルへ戻るボタン
+    //[10]クリックしたらタイトルへ戻るボタン
     public void OnTitleClick()
     {
-        SceneManager.LoadScene("Title");
+        //[11]ハイスコアの書き換え
+        if (GameDirector.hiScore < PlayDirector.scores)
+        {
+            GameDirector.hiScore = PlayDirector.scores;
+        }
+        SceneManager.LoadScene("00_Title");
     }
 
 
