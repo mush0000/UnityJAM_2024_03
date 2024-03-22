@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayDirector : MonoBehaviour
@@ -18,18 +19,46 @@ public class PlayDirector : MonoBehaviour
     //[10]ハイスコアの書き換え
     //[11]タイトルへ戻る
 
+    public Text hiScoresText;//ハイスコアを画面に表示
     public static int scores;//現在の得点を表示
+    public Text scoresText;//ハイスコアを画面に表示
     public int ADDSCORE = 100;//正解時の加算点
 
-    public List<Sprite> allCharasA = new List<Sprite>();// キャラ一覧(アタッチで格納)
-    public List<Sprite> allCharasB = new List<Sprite>();// キャラ一覧(アタッチで格納)
-    public List<Sprite> allCharasC = new List<Sprite>();// キャラ一覧(アタッチで格納)
+    public List<Sprite> allCharasA = new List<Sprite>();// キャラA一覧(アタッチで格納)
+    public List<Sprite> allCharasB = new List<Sprite>();// キャラB一覧(アタッチで格納)
+    public List<Sprite> allCharasC = new List<Sprite>();// キャラC一覧(アタッチで格納)
     public static List<Sprite> selectCharas;//一覧から問題を抜き出す箱
+
+    public Sprite CharaAQuiz;//正解のキャラA画像
+    int indexA;//正解のキャラA画像番号
+    public Image Image_CharacterA;//クイズ画面に表示
+    public Sprite CharaAAnser;//プレイヤーが選択したキャラA画像
+    public int CharaAAnserIndex = 0;//プレイヤーが選択したキャラA画像番号
+    public Image Image_CharacterA_Anser;//プレイヤーが選択したキャラA画面に表示
+
+    public Sprite CharaBQuiz;//正解のキャラB画像
+    int indexB;//正解のキャラB画像番号
+    public Image Image_CharacterB;//クイズ画面に表示
+    public Sprite CharaBAnser;//プレイヤーが選択したキャラB画像
+    public int CharaBAnserIndex = 0;//プレイヤーが選択したキャラB画像番号
+    public Image Image_CharacterB_Anser;//プレイヤーが選択したキャラB画面に表示
+
+    public Sprite CharaCQuiz;//正解のキャラC画像
+    int indexC;//正解のキャラA画像番号
+    public Image Image_CharacterC;//クイズ画面に表示
+    public Sprite CharaCAnser;//プレイヤーが選択したキャラC画像
+    public int CharaCAnserIndex = 0;//プレイヤーが選択したキャラC画像番号
+    public Image Image_CharacterC_Anser;//プレイヤーが選択したキャラC画面に表示
+
 
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
     public GameObject Canvas_NextQuiz;
     public GameObject Canvas_Title;
+
+
+
+
 
     public void SelectQuiz()//[1]リストからランダムで三つ子を３人選んで格納
     {
@@ -37,19 +66,37 @@ public class PlayDirector : MonoBehaviour
         selectCharas = new List<Sprite>();
 
         // キャラAをランダムに１つ抽選、取得
-        int indexA = Random.Range(0, allCharasA.Count);
-        Sprite quiz = allCharasA[indexA];//quizに一つ問題を入れる
-        selectCharas.Add(quiz);//selectCharasに問題を加える
+        indexA = Random.Range(0, allCharasA.Count);
+        CharaAQuiz = allCharasA[indexA];
+        this.Image_CharacterA.sprite = CharaAQuiz;
+        //Sprite quiz = allCharasA[indexA];//quizに一つ問題を入れる
+        //selectCharas.Add(quiz);//selectCharasに問題を加える
 
         // キャラBをランダムに１つ抽選、取得
-        int indexB = Random.Range(0, allCharasB.Count);
-        quiz = allCharasB[indexB];//quizに一つ問題を入れる
-        selectCharas.Add(quiz);//selectCharasに問題を加える
+        indexB = Random.Range(0, allCharasB.Count);
+        CharaBQuiz = allCharasB[indexB];
+        this.Image_CharacterB.sprite = CharaBQuiz;
+        //quiz = allCharasB[indexB];//quizに一つ問題を入れる
+        //selectCharas.Add(quiz);//selectCharasに問題を加える
 
         // キャラCをランダムに１つ抽選、取得
-        int indexC = Random.Range(0, allCharasC.Count);
-        quiz = allCharasC[indexC];//quizに一つ問題を入れる
-        selectCharas.Add(quiz);//selectCharasに問題を加える
+        indexC = Random.Range(0, allCharasC.Count);
+        CharaCQuiz = allCharasC[indexC];
+        this.Image_CharacterC.sprite = CharaCQuiz;
+        //quiz = allCharasC[indexC];//quizに一つ問題を入れる
+        //selectCharas.Add(quiz);//selectCharasに問題を加える
+
+        //選択した数値の初期化
+        CharaAAnserIndex = 0;
+        CharaBAnserIndex = 0;
+        CharaCAnserIndex = 0;
+        //選択した画像の初期化
+        CharaAAnser = allCharasA[CharaCAnserIndex];
+        this.Image_CharacterA_Anser.sprite = CharaAAnser;
+        CharaBAnser = allCharasB[CharaBAnserIndex];
+        this.Image_CharacterB_Anser.sprite = CharaBAnser;
+        CharaCAnser = allCharasC[CharaCAnserIndex];
+        this.Image_CharacterC_Anser.sprite = CharaCAnser;
 
         Display();
     }
@@ -68,25 +115,64 @@ public class PlayDirector : MonoBehaviour
         Canvas_Display.gameObject.SetActive(false);
         //AnswerScreenを呼ぶ
         Canvas_AnswerScreen.gameObject.SetActive(true);//[4]Canvas_AnswerScreenを表示
-        //AnswerScreen();
     }
-    // public void AnswerScreen()//
-    // {
-    //     //上に選んだ三つ子の画像
-    //     //下には選択用スクロール式の三つ子(allCharas)を表示、畑画面が使えるはず…！
-    // }
+
+    public void CharaALeftArrow()//index-1の画像へ書き換える
+    {
+        CharaAAnserIndex -= 1;
+        CharaAAnser = allCharasA[CharaCAnserIndex];
+        this.Image_CharacterA_Anser.sprite = CharaAAnser;
+    }
+    public void CharaARightArrow()//index+1の画像へ書き換える
+    {
+        CharaAAnserIndex += 1;
+        CharaAAnser = allCharasA[CharaAAnserIndex];
+        this.Image_CharacterA_Anser.sprite = CharaAAnser;
+    }
+    public void CharaBLeftArrow()
+    {
+        CharaBAnserIndex -= 1;
+        CharaBAnser = allCharasB[CharaBAnserIndex];
+        this.Image_CharacterB_Anser.sprite = CharaBAnser;
+
+    }
+    public void CharaBRightArrow()
+    {
+        CharaBAnserIndex += 1;
+        CharaBAnser = allCharasB[CharaBAnserIndex];
+        this.Image_CharacterB_Anser.sprite = CharaBAnser;
+    }
+    public void CharaCLeftArrow()
+    {
+        CharaCAnserIndex -= 1;
+        CharaCAnser = allCharasC[CharaCAnserIndex];
+        this.Image_CharacterC_Anser.sprite = CharaCAnser;
+    }
+    public void CharaCRightArrow()
+    {
+        CharaCAnserIndex += 1;
+        CharaCAnser = allCharasC[CharaCAnserIndex];
+        this.Image_CharacterC_Anser.sprite = CharaCAnser;
+    }
+
 
     public void OnAnserScreenClick()//[5]着替えるボタンで
     {
         int judg = 0;
         //[6]正答判定(true false)
-        for (int i = 0; i < 3; i++)
+        if (indexA == CharaAAnserIndex)//問題のAと回答したAが一致してたら
         {
-            // if(//問題の三つ子と回答した三つ子があってたら)
-            // {
-            //     judg += 1;
-            // }
+            judg += 1;
         }
+        if (indexB == CharaBAnserIndex)//問題のBと回答したBが一致してたら)
+        {
+            judg += 1;
+        }
+        if (indexC == CharaCAnserIndex)//問題のCと回答したCが一致してたら)
+        {
+            judg += 1;
+        }
+
 
         Canvas_AnswerScreen.gameObject.SetActive(false);
 
@@ -97,10 +183,13 @@ public class PlayDirector : MonoBehaviour
             //リストの中身を空にする
             //スコアを加点
             scores += ADDSCORE;
+            this.scoresText.text = scores.ToString("00000");
 
         }
-        //[8]一人でも間違ってたらリザルトを表示
-        Canvas_Title.gameObject.SetActive(true);
+        else
+        {//[8]一人でも間違ってたらリザルトを表示
+            Canvas_Title.gameObject.SetActive(true);
+        }
     }
 
     //[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
@@ -114,9 +203,10 @@ public class PlayDirector : MonoBehaviour
     public void OnTitleClick()
     {
         //[11]ハイスコアの書き換え
-        if (GameDirector.hiScore < PlayDirector.scores)
+        if (GameDirector.hiScore < scores)
         {
-            GameDirector.hiScore = PlayDirector.scores;
+            GameDirector.hiScore = scores;
+            this.hiScoresText.text = GameDirector.hiScore.ToString("00000");
         }
         SceneManager.LoadScene("00_Title");
     }

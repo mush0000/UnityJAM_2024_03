@@ -616,7 +616,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &385203327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,9 +693,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2127913817}
+  - {fileID: 2086408084}
   - {fileID: 2078038704}
   - {fileID: 1549411293}
-  - {fileID: 2086408084}
   - {fileID: 1371716638}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -819,7 +819,7 @@ GameObject:
   - component: {fileID: 558459832}
   - component: {fileID: 558459831}
   m_Layer: 5
-  m_Name: Image_CharacterA
+  m_Name: Image_CharacterA_Anser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1349,9 +1349,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaALeftArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1481,9 +1481,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaARightArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1613,9 +1613,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaCLeftArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1692,6 +1692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8493cbefd4d08641be168654ae77bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiScoresText: {fileID: 1308074804}
+  scoresText: {fileID: 1179901790}
   ADDSCORE: 100
   allCharasA:
   - {fileID: 21300000, guid: be57bf645576a3c41b61bba294f006fe, type: 3}
@@ -1717,6 +1719,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6ab07fd4c1abcb34898bba63287c3351, type: 3}
   - {fileID: 21300000, guid: b2ddb563d100abe489676fed8f59639e, type: 3}
   - {fileID: 21300000, guid: 05ff350b84f8c904f925be118bad3a1c, type: 3}
+  CharaAQuiz: {fileID: 0}
+  Image_CharacterA: {fileID: 2086408085}
+  CharaAAnser: {fileID: 0}
+  CharaAAnserIndex: 0
+  Image_CharacterA_Anser: {fileID: 558459831}
+  CharaBQuiz: {fileID: 0}
+  Image_CharacterB: {fileID: 2078038705}
+  CharaBAnser: {fileID: 0}
+  CharaBAnserIndex: 0
+  Image_CharacterB_Anser: {fileID: 1700125840}
+  CharaCQuiz: {fileID: 0}
+  Image_CharacterC: {fileID: 1549411294}
+  CharaCAnser: {fileID: 0}
+  CharaCAnserIndex: 0
+  Image_CharacterC_Anser: {fileID: 1202950239}
   Canvas_Display: {fileID: 385203326}
   Canvas_AnswerScreen: {fileID: 1334156178}
   Canvas_NextQuiz: {fileID: 145382516}
@@ -1818,9 +1835,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaCRightArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1950,9 +1967,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaBLeftArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2082,9 +2099,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1032206877}
         m_TargetAssemblyTypeName: PlayDirector, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: CharaBRightArrow
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2144,7 +2161,7 @@ GameObject:
   - component: {fileID: 1179901791}
   - component: {fileID: 1179901790}
   m_Layer: 5
-  m_Name: Text (Legacy) (1)
+  m_Name: Text_score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2223,7 +2240,7 @@ GameObject:
   - component: {fileID: 1202950240}
   - component: {fileID: 1202950239}
   m_Layer: 5
-  m_Name: Image_CharacterC
+  m_Name: Image_CharacterC_Anser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2461,7 +2478,7 @@ GameObject:
   - component: {fileID: 1308074805}
   - component: {fileID: 1308074804}
   m_Layer: 5
-  m_Name: Text (Legacy)
+  m_Name: Text_hiScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3096,7 +3113,7 @@ GameObject:
   - component: {fileID: 1700125841}
   - component: {fileID: 1700125840}
   m_Layer: 5
-  m_Name: Image_CharacterB
+  m_Name: Image_CharacterB_Anser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
