@@ -21,8 +21,10 @@ public class PlayDirector : MonoBehaviour
     public static int scores;//現在の得点を表示
     public int ADDSCORE = 100;//正解時の加算点
 
-    public List<CharacterData> allCharas = new List<CharacterData>();// キャラ一覧(アタッチで格納)
-    public static List<CharacterData> selectCharas;//一覧から問題を抜き出す箱
+    public List<Sprite> allCharasA = new List<Sprite>();// キャラ一覧(アタッチで格納)
+    public List<Sprite> allCharasB = new List<Sprite>();// キャラ一覧(アタッチで格納)
+    public List<Sprite> allCharasC = new List<Sprite>();// キャラ一覧(アタッチで格納)
+    public static List<Sprite> selectCharas;//一覧から問題を抜き出す箱
 
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
@@ -31,15 +33,24 @@ public class PlayDirector : MonoBehaviour
 
     public void SelectQuiz()//[1]リストからランダムで三つ子を３人選んで格納
     {
-        // 抽選結果を入れるリストのインスタンスを作成
-        //selectCharas = new List<CharacterData>();
-        // for (int i = 0; i < 3; i++)
-        // {
-        //     // ランダムな内容を１つ抽選、取得
-        //     int index = Random.Range(0, allCharas.Count);
-        //     CharacterData quiz = allCharas[index];//quizに一つ問題を入れる
-        //     selectCharas.Add(quiz);//selectCharasに問題を加える
-        // }
+        //抽選結果を入れるリストのインスタンスを作成
+        selectCharas = new List<Sprite>();
+
+        // キャラAをランダムに１つ抽選、取得
+        int indexA = Random.Range(0, allCharasA.Count);
+        Sprite quiz = allCharasA[indexA];//quizに一つ問題を入れる
+        selectCharas.Add(quiz);//selectCharasに問題を加える
+
+        // キャラBをランダムに１つ抽選、取得
+        int indexB = Random.Range(0, allCharasB.Count);
+        quiz = allCharasB[indexB];//quizに一つ問題を入れる
+        selectCharas.Add(quiz);//selectCharasに問題を加える
+
+        // キャラCをランダムに１つ抽選、取得
+        int indexC = Random.Range(0, allCharasC.Count);
+        quiz = allCharasC[indexC];//quizに一つ問題を入れる
+        selectCharas.Add(quiz);//selectCharasに問題を加える
+
         Display();
     }
 
