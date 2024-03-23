@@ -50,18 +50,17 @@ public class PlayDirector : MonoBehaviour
     public int CharaCAnserIndex = 0;//プレイヤーが選択したキャラC画像番号
     public Image Image_CharacterC_Anser;//プレイヤーが選択したキャラC画面に表示
 
-
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
+    public GameObject Canvas_AnswerLook;
     public GameObject Canvas_NextQuiz;
     public GameObject Canvas_Title;
 
-
-
-
-
     public void SelectQuiz()//[1]リストからランダムで三つ子を３人選んで格納
     {
+        //ハイスコアの表示
+        this.hiScoresText.text = GameDirector.hiScore.ToString("00000");
+
         //抽選結果を入れるリストのインスタンスを作成
         selectCharas = new List<Sprite>();
 
@@ -115,46 +114,58 @@ public class PlayDirector : MonoBehaviour
         Canvas_Display.gameObject.SetActive(false);
         //AnswerScreenを呼ぶ
         Canvas_AnswerScreen.gameObject.SetActive(true);//[4]Canvas_AnswerScreenを表示
+        Canvas_AnswerLook.gameObject.SetActive(true);
     }
 
+    //ボタン設定ブロック
+    #region ArrowButtonSetting
     public void CharaALeftArrow()//index-1の画像へ書き換える
     {
         CharaAAnserIndex -= 1;
-        CharaAAnser = allCharasA[CharaCAnserIndex];
+        CharaAAnserIndex = Mathf.Clamp(CharaAAnserIndex, 0, allCharasA.Count - 1);
+        // Debug.Log(CharaAAnserIndex);
+        CharaAAnser = allCharasA[CharaAAnserIndex];
         this.Image_CharacterA_Anser.sprite = CharaAAnser;
     }
     public void CharaARightArrow()//index+1の画像へ書き換える
     {
         CharaAAnserIndex += 1;
+        CharaAAnserIndex = Mathf.Clamp(CharaAAnserIndex, 0, allCharasA.Count - 1);
+        // Debug.Log(CharaAAnserIndex);
         CharaAAnser = allCharasA[CharaAAnserIndex];
         this.Image_CharacterA_Anser.sprite = CharaAAnser;
     }
     public void CharaBLeftArrow()
     {
         CharaBAnserIndex -= 1;
+        CharaBAnserIndex = Mathf.Clamp(CharaBAnserIndex, 0, allCharasB.Count - 1);
+        // Debug.Log(CharaBAnserIndex);
         CharaBAnser = allCharasB[CharaBAnserIndex];
         this.Image_CharacterB_Anser.sprite = CharaBAnser;
-
     }
     public void CharaBRightArrow()
     {
         CharaBAnserIndex += 1;
+        CharaBAnserIndex = Mathf.Clamp(CharaBAnserIndex, 0, allCharasB.Count - 1);
+        // Debug.Log(CharaBAnserIndex);
         CharaBAnser = allCharasB[CharaBAnserIndex];
         this.Image_CharacterB_Anser.sprite = CharaBAnser;
     }
     public void CharaCLeftArrow()
     {
         CharaCAnserIndex -= 1;
+        CharaCAnserIndex = Mathf.Clamp(CharaCAnserIndex, 0, allCharasC.Count - 1);
         CharaCAnser = allCharasC[CharaCAnserIndex];
         this.Image_CharacterC_Anser.sprite = CharaCAnser;
     }
     public void CharaCRightArrow()
     {
         CharaCAnserIndex += 1;
+        CharaCAnserIndex = Mathf.Clamp(CharaCAnserIndex, 0, allCharasC.Count - 1);
         CharaCAnser = allCharasC[CharaCAnserIndex];
         this.Image_CharacterC_Anser.sprite = CharaCAnser;
     }
-
+    #endregion
 
     public void OnAnserScreenClick()//[5]着替えるボタンで
     {
@@ -173,7 +184,6 @@ public class PlayDirector : MonoBehaviour
             judg += 1;
         }
 
-
         Canvas_AnswerScreen.gameObject.SetActive(false);
 
         if (judg == 3)//[7]三人ともあってたら得点を加算して[1]へ
@@ -184,7 +194,6 @@ public class PlayDirector : MonoBehaviour
             //スコアを加点
             scores += ADDSCORE;
             this.scoresText.text = scores.ToString("00000");
-
         }
         else
         {//[8]一人でも間違ってたらリザルトを表示
@@ -195,6 +204,7 @@ public class PlayDirector : MonoBehaviour
     //[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
     public void OnNextQuizClick()
     {
+        Canvas_AnswerLook.gameObject.SetActive(false);
         Canvas_NextQuiz.gameObject.SetActive(false);
         SelectQuiz();
     }
