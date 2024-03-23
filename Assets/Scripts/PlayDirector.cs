@@ -56,6 +56,14 @@ public class PlayDirector : MonoBehaviour
     public GameObject Canvas_NextQuiz;
     public GameObject Canvas_Title;
 
+    //音声用
+    public AudioClip UiSe00Ok;
+    public AudioClip UiSe01Select;
+    public AudioClip Se00CorrectAnswer;
+    public AudioClip Se01InCorrectAnswer;
+    public AudioClip Se02Cutain;
+    AudioSource audioSource;
+
     public void SelectQuiz()//[1]リストからランダムで三つ子を３人選んで格納
     {
         //ハイスコアの表示
@@ -108,13 +116,14 @@ public class PlayDirector : MonoBehaviour
 
     public void OnDisplayClick()//[3]クリックで次に進む→暗転
     {
-        Debug.Log("OnDisplayClick");
         //暗転
         //Displayの三つ子を消す
         Canvas_Display.gameObject.SetActive(false);
         //AnswerScreenを呼ぶ
         Canvas_AnswerScreen.gameObject.SetActive(true);//[4]Canvas_AnswerScreenを表示
         Canvas_AnswerLook.gameObject.SetActive(true);
+        //音声
+        audioSource.PlayOneShot(UiSe00Ok);
     }
 
     //ボタン設定ブロック
@@ -126,6 +135,7 @@ public class PlayDirector : MonoBehaviour
         // Debug.Log(CharaAAnserIndex);
         CharaAAnser = allCharasA[CharaAAnserIndex];
         this.Image_CharacterA_Anser.sprite = CharaAAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     public void CharaARightArrow()//index+1の画像へ書き換える
     {
@@ -134,6 +144,7 @@ public class PlayDirector : MonoBehaviour
         // Debug.Log(CharaAAnserIndex);
         CharaAAnser = allCharasA[CharaAAnserIndex];
         this.Image_CharacterA_Anser.sprite = CharaAAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     public void CharaBLeftArrow()
     {
@@ -142,6 +153,7 @@ public class PlayDirector : MonoBehaviour
         // Debug.Log(CharaBAnserIndex);
         CharaBAnser = allCharasB[CharaBAnserIndex];
         this.Image_CharacterB_Anser.sprite = CharaBAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     public void CharaBRightArrow()
     {
@@ -150,6 +162,7 @@ public class PlayDirector : MonoBehaviour
         // Debug.Log(CharaBAnserIndex);
         CharaBAnser = allCharasB[CharaBAnserIndex];
         this.Image_CharacterB_Anser.sprite = CharaBAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     public void CharaCLeftArrow()
     {
@@ -157,6 +170,7 @@ public class PlayDirector : MonoBehaviour
         CharaCAnserIndex = Mathf.Clamp(CharaCAnserIndex, 0, allCharasC.Count - 1);
         CharaCAnser = allCharasC[CharaCAnserIndex];
         this.Image_CharacterC_Anser.sprite = CharaCAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     public void CharaCRightArrow()
     {
@@ -164,11 +178,13 @@ public class PlayDirector : MonoBehaviour
         CharaCAnserIndex = Mathf.Clamp(CharaCAnserIndex, 0, allCharasC.Count - 1);
         CharaCAnser = allCharasC[CharaCAnserIndex];
         this.Image_CharacterC_Anser.sprite = CharaCAnser;
+        audioSource.PlayOneShot(UiSe01Select);
     }
     #endregion
 
     public void OnAnserScreenClick()//[5]着替えるボタンで
     {
+        audioSource.PlayOneShot(Se02Cutain);
         int judg = 0;
         //[6]正答判定(true false)
         if (indexA == CharaAAnserIndex)//問題のAと回答したAが一致してたら
@@ -204,6 +220,7 @@ public class PlayDirector : MonoBehaviour
     //[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
     public void OnNextQuizClick()
     {
+        audioSource.PlayOneShot(UiSe00Ok);
         Canvas_AnswerLook.gameObject.SetActive(false);
         Canvas_NextQuiz.gameObject.SetActive(false);
         SelectQuiz();
@@ -212,6 +229,7 @@ public class PlayDirector : MonoBehaviour
     //[10]クリックしたらタイトルへ戻るボタン
     public void OnTitleClick()
     {
+        audioSource.PlayOneShot(UiSe00Ok);
         //[11]ハイスコアの書き換え
         if (GameDirector.hiScore < scores)
         {
@@ -225,6 +243,8 @@ public class PlayDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Componentを取得
+        this.audioSource = GetComponent<AudioSource>();
         SelectQuiz();
     }
 

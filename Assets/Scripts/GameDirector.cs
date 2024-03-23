@@ -10,7 +10,6 @@ public class GameDirector : MonoBehaviour
 
     public static int hiScore;//合計得点(シーン切り替えても消えない)
     public Text hiScoreText;//合計得点を表示
-    public AudioClip bgm;
 
     // Start is called before the first frame update
     void Start()
