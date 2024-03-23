@@ -5,6 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class TitleDirector : MonoBehaviour
 {
+
+    public void OnPlayLoadScene()
+    {
+        StartCoroutine("PlayLoadScene");//正解音を流す
+    }
+
+    public IEnumerator PlayLoadScene()//シーン遷移
+    {
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene("01_Play");
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +25,12 @@ public class TitleDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SceneManager.LoadScene("01_Play");
-        }
+
     }
+
+
+
+
+
+
 }

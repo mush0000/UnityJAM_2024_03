@@ -35,6 +35,7 @@ public class PlayDirector : MonoBehaviour
     public Sprite CharaAAnser;//プレイヤーが選択したキャラA画像
     public int CharaAAnserIndex = 0;//プレイヤーが選択したキャラA画像番号
     public Image Image_CharacterA_Anser;//プレイヤーが選択したキャラA画面に表示
+    [SerializeField] public Image CharaAcross;//不正解時に対象キャラに×を表示
 
     public Sprite CharaBQuiz;//正解のキャラB画像
     int indexB;//正解のキャラB画像番号
@@ -42,6 +43,7 @@ public class PlayDirector : MonoBehaviour
     public Sprite CharaBAnser;//プレイヤーが選択したキャラB画像
     public int CharaBAnserIndex = 0;//プレイヤーが選択したキャラB画像番号
     public Image Image_CharacterB_Anser;//プレイヤーが選択したキャラB画面に表示
+    [SerializeField] public Image CharaBcross;//不正解時に対象キャラに×を表示
 
     public Sprite CharaCQuiz;//正解のキャラC画像
     int indexC;//正解のキャラA画像番号
@@ -49,12 +51,17 @@ public class PlayDirector : MonoBehaviour
     public Sprite CharaCAnser;//プレイヤーが選択したキャラC画像
     public int CharaCAnserIndex = 0;//プレイヤーが選択したキャラC画像番号
     public Image Image_CharacterC_Anser;//プレイヤーが選択したキャラC画面に表示
+    [SerializeField] public Image CharaCcross;//不正解時に対象キャラに×を表示
 
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
     public GameObject Canvas_AnswerLook;
     public GameObject Canvas_NextQuiz;
-    public GameObject Canvas_Title;
+    public GameObject Canvas_Anser;
+    public GameObject Canvas_Result;
+    public GameObject Canvas_CrossA;
+    public GameObject Canvas_CrossB;
+    public GameObject Canvas_CrossC;
 
     //音声用
     // public AudioClip UiSe00Ok;
@@ -191,13 +198,27 @@ public class PlayDirector : MonoBehaviour
         {
             judg += 1;
         }
+        else
+        {
+            // Debug.Log("はいったかどうか");
+            // CharaAcross.enabled = true;
+            Canvas_CrossA.SetActive(true);
+        }
         if (indexB == CharaBAnserIndex)//問題のBと回答したBが一致してたら)
         {
             judg += 1;
         }
+        else
+        {
+            Canvas_CrossB.SetActive(true);
+        }
         if (indexC == CharaCAnserIndex)//問題のCと回答したCが一致してたら)
         {
             judg += 1;
+        }
+        else
+        {
+            Canvas_CrossC.SetActive(true);
         }
 
         Canvas_AnswerScreen.gameObject.SetActive(false);
@@ -205,6 +226,8 @@ public class PlayDirector : MonoBehaviour
         if (judg == 3)//[7]三人ともあってたら得点を加算して[1]へ
         {
             Canvas_NextQuiz.gameObject.SetActive(true);
+            StartCoroutine("CorrectAnswer");//正解音を流す
+
             //回答画面を非表示にする
             //リストの中身を空にする
             //スコアを加点
@@ -213,8 +236,25 @@ public class PlayDirector : MonoBehaviour
         }
         else
         {//[8]一人でも間違ってたらリザルトを表示
-            Canvas_Title.gameObject.SetActive(true);
+            Canvas_Anser.gameObject.SetActive(true);
+            StartCoroutine("InCorrectAnswer");//不正解音を流す
         }
+    }
+
+    public AudioClip sound_CorrectAnswer;
+    public AudioClip sound_InCorrectAnswer;
+    AudioSource audioSource;
+    public IEnumerator CorrectAnswer()//正解音を流す
+    {
+        yield return new WaitForSeconds(0.1f);
+        this.audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(sound_InCorrectAnswer);
+    }
+    public IEnumerator InCorrectAnswer()//不正解音を流す
+    {
+        yield return new WaitForSeconds(0.1f);
+        this.audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(sound_CorrectAnswer);
     }
 
     //[7]三人ともあってたら得点を加算して[1]へ(問題を消す)
@@ -224,6 +264,11 @@ public class PlayDirector : MonoBehaviour
         Canvas_AnswerLook.gameObject.SetActive(false);
         Canvas_NextQuiz.gameObject.SetActive(false);
         SelectQuiz();
+    }
+
+    public void OnAnserClick()
+    {
+        Canvas_Result.gameObject.SetActive(true);
     }
 
     //[10]クリックしたらタイトルへ戻るボタン
