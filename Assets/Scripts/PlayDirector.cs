@@ -23,6 +23,7 @@ public class PlayDirector : MonoBehaviour
     public static int scores;//現在の得点を表示
     public Text scoresText;//ハイスコアを画面に表示
     public int ADDSCORE = 100;//正解時の加算点
+    public Text ResultScoresText;//スコアをリザルト画面に表示
 
     public List<Sprite> allCharasA = new List<Sprite>();// キャラA一覧(アタッチで格納)
     public List<Sprite> allCharasB = new List<Sprite>();// キャラB一覧(アタッチで格納)
@@ -75,6 +76,7 @@ public class PlayDirector : MonoBehaviour
     {
         //ハイスコアの表示
         this.hiScoresText.text = GameDirector.hiScore.ToString("00000");
+
 
         //抽選結果を入れるリストのインスタンスを作成
         selectCharas = new List<Sprite>();
@@ -237,6 +239,7 @@ public class PlayDirector : MonoBehaviour
         else
         {//[8]一人でも間違ってたらリザルトを表示
             Canvas_Anser.gameObject.SetActive(true);
+            this.ResultScoresText.text = scores.ToString("00000");//スコアをリザルト画面に表示
             StartCoroutine("InCorrectAnswer");//不正解音を流す
         }
     }
@@ -281,6 +284,8 @@ public class PlayDirector : MonoBehaviour
             GameDirector.hiScore = scores;
             this.hiScoresText.text = GameDirector.hiScore.ToString("00000");
         }
+        //スコアの初期化
+        scores = 0;
         SceneManager.LoadScene("00_Title");
     }
 
