@@ -74,6 +74,11 @@ public class PlayDirector : MonoBehaviour
     public GameObject Canvas_CircleA;
     public GameObject Canvas_CircleB;
     public GameObject Canvas_CircleC;
+    public GameObject Canvas_curtain;
+
+
+    //カーテン演出
+    private Animator animator;
 
 
 
@@ -138,6 +143,8 @@ public class PlayDirector : MonoBehaviour
 
     public void OnDisplayClick()//[3]クリックで次に進む→暗転
     {
+        //カーテン演出
+        //animator.SetBool("blRot", true);
         //暗転
         //Displayの三つ子を消す
         Canvas_Display.gameObject.SetActive(false);
@@ -377,8 +384,9 @@ public class PlayDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //カーテン演出
-        //CurtainSlide();
+        // animator = gameObject.GetComponent<Animator>();
+        // this.animator.SetTrigger("Animation_Cutain_Trigger");
+        //Canvas_curtain.gameObject.SetActive(true);
         SelectQuiz();
     }
 
