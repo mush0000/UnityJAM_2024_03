@@ -54,6 +54,13 @@ public class PlayDirector : MonoBehaviour
     public Image Image_CharacterC_Anser;//プレイヤーが選択したキャラC画面に表示
     [SerializeField] public Image CharaCcross;//不正解時に対象キャラに×を表示
 
+    public Image resultImage;//リザルトでのコメント表示用
+    public Sprite resultImageS;//結果ごとの表示画像
+    public Sprite resultImageA;//結果ごとの表示画像
+    public Sprite resultImageB;//結果ごとの表示画像
+    public Sprite resultImageC;//結果ごとの表示画像
+    public Sprite resultImageD;//結果ごとの表示画像
+
     public GameObject Canvas_base;
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
@@ -288,7 +295,33 @@ public class PlayDirector : MonoBehaviour
     public void OnAnserClick()
     {
         Canvas_base.gameObject.SetActive(false);//ハイスコアの文字消す
-        Canvas_Result.gameObject.SetActive(true);
+        JudeResultScores(); //リザルトのコメント画像をスコアに応じて書き換える
+        Canvas_Result.gameObject.SetActive(true);//リザルトの表示
+    }
+
+    public void JudeResultScores()//スコアに応じてコメント画像を書き換える
+    {
+        if (scores >= 10000)
+        {
+            this.resultImage.sprite = resultImageS;
+
+        }
+        else if (scores >= 1000)
+        {
+            this.resultImage.sprite = resultImageA;
+        }
+        else if (scores >= 600)
+        {
+            this.resultImage.sprite = resultImageB;
+        }
+        else if (scores >= 300)
+        {
+            this.resultImage.sprite = resultImageC;
+        }
+        else if (scores >= 0)
+        {
+            this.resultImage.sprite = resultImageD;
+        }
     }
 
     //[10]クリックしたらタイトルへ戻るボタン
