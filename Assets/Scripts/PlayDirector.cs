@@ -75,6 +75,8 @@ public class PlayDirector : MonoBehaviour
     public GameObject Canvas_CircleB;
     public GameObject Canvas_CircleC;
 
+
+
     //音声用
     // public AudioClip UiSe00Ok;
     // public AudioClip UiSe01Select;
@@ -327,6 +329,7 @@ public class PlayDirector : MonoBehaviour
     //[10]クリックしたらタイトルへ戻るボタン
     public void OnTitleClick()
     {
+
         //audioSource.PlayOneShot(UiSe00Ok);
         //[11]ハイスコアの書き換え
         if (GameDirector.hiScore < scores)
@@ -340,17 +343,55 @@ public class PlayDirector : MonoBehaviour
     }
 
 
+    //カーテンを動かす
+    //X1920(開いてる) → 0.05秒 → X-1920(閉まる)0.1秒 → 0.05秒 →　X1920(開く)
+    // public RectTransform Curtain;
+    // private int counter = 1920;
+    // private int Default = 0;
+    // private float move = -1f;
+    // public void CurtainSlide()
+    // {
+    //     Curtain.position += new Vector3(move, 0, 0);
+    //     counter++;
+    //     if (counter == 100)
+    //     {
+    //         counter = 0;
+    //         move *= -1f;
+    //     }
+    //     // counter--;
+    //     // if (counter == -1920)
+    //     // {
+    //     //     counter = 0;
+    //     //     move *= 1;
+    //     // }
+
+    //     // if (counter == -1920)
+    //     // {
+    //     //     counter = 0;
+    //     //     move *= 1;
+    //     // }
+
+    // }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        //Componentを取得
-        //this.audioSource = GetComponent<AudioSource>();
+        //カーテン演出
+        //CurtainSlide();
         SelectQuiz();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //CurtainSlide();
+        // Curtain.position += new Vector3(move, 0, 0);
+        // counter++;
+        // if (counter == 100)
+        // {
+        //     counter = 0;
+        //     move *= 1;
+        // }
     }
 }
