@@ -54,6 +54,7 @@ public class PlayDirector : MonoBehaviour
     public Image Image_CharacterC_Anser;//プレイヤーが選択したキャラC画面に表示
     [SerializeField] public Image CharaCcross;//不正解時に対象キャラに×を表示
 
+    public GameObject Canvas_base;
     public GameObject Canvas_Display;
     public GameObject Canvas_AnswerScreen;
     public GameObject Canvas_AnswerLook;
@@ -63,6 +64,9 @@ public class PlayDirector : MonoBehaviour
     public GameObject Canvas_CrossA;
     public GameObject Canvas_CrossB;
     public GameObject Canvas_CrossC;
+    public GameObject Canvas_CircleA;
+    public GameObject Canvas_CircleB;
+    public GameObject Canvas_CircleC;
 
     //音声用
     // public AudioClip UiSe00Ok;
@@ -198,6 +202,7 @@ public class PlayDirector : MonoBehaviour
         //[6]正答判定(true false)
         if (indexA == CharaAAnserIndex)//問題のAと回答したAが一致してたら
         {
+            Canvas_CircleA.SetActive(true);
             judg += 1;
         }
         else
@@ -208,6 +213,7 @@ public class PlayDirector : MonoBehaviour
         }
         if (indexB == CharaBAnserIndex)//問題のBと回答したBが一致してたら)
         {
+            Canvas_CircleB.SetActive(true);
             judg += 1;
         }
         else
@@ -216,6 +222,7 @@ public class PlayDirector : MonoBehaviour
         }
         if (indexC == CharaCAnserIndex)//問題のCと回答したCが一致してたら)
         {
+            Canvas_CircleC.SetActive(true);
             judg += 1;
         }
         else
@@ -235,6 +242,12 @@ public class PlayDirector : MonoBehaviour
             //スコアを加点
             scores += ADDSCORE;
             this.scoresText.text = scores.ToString("00000");
+            //[11]ハイスコアの書き換え
+            if (GameDirector.hiScore < scores)
+            {
+                GameDirector.hiScore = scores;
+                this.hiScoresText.text = GameDirector.hiScore.ToString("00000");
+            }
         }
         else
         {//[8]一人でも間違ってたらリザルトを表示
@@ -266,11 +279,15 @@ public class PlayDirector : MonoBehaviour
         //audioSource.PlayOneShot(UiSe00Ok);
         Canvas_AnswerLook.gameObject.SetActive(false);
         Canvas_NextQuiz.gameObject.SetActive(false);
+        Canvas_CircleA.SetActive(false);
+        Canvas_CircleB.SetActive(false);
+        Canvas_CircleC.SetActive(false);
         SelectQuiz();
     }
 
     public void OnAnserClick()
     {
+        Canvas_base.gameObject.SetActive(false);//ハイスコアの文字消す
         Canvas_Result.gameObject.SetActive(true);
     }
 
